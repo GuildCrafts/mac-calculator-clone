@@ -92,3 +92,35 @@ function Queue() {
     return oldFront._data
   }
 }
+
+function inputBuffer() {
+  this.buffer = ''
+
+  this.push = function(character) {
+    this.buffer += character
+  }
+
+  this.clear = function() {
+    this.buffer = ''
+  }
+
+  this.read = function() {
+    return this.buffer
+  }
+}
+
+function Calculator() {
+  this.inputBuffer = new inputBuffer()
+  this.outputQueue = new Queue()
+  this.operatorStack = new Stack()
+
+  this.buttonPress = function(button) {
+    if (isNaN(button) && button != '.') {
+      console.log("not a number");
+    } else {
+      console.log(button);
+    }
+  }
+}
+
+var myCalculator = new Calculator()
