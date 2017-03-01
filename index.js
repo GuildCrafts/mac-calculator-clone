@@ -93,7 +93,7 @@ function Queue() {
   }
 }
 
-function inputBuffer() {
+function InputBuffer() {
   this.buffer = ''
 
   this.push = function(character) {
@@ -110,16 +110,23 @@ function inputBuffer() {
 }
 
 function Calculator() {
-  this.inputBuffer = new inputBuffer()
+  this.inputBuffer = new InputBuffer()
   this.outputQueue = new Queue()
   this.operatorStack = new Stack()
 
-  this.buttonPress = function(button) {
-    if (isNaN(button) && button != '.') {
-      console.log("not a number");
+  this.buttonPress = function(buttonInput) {
+    if (isNaN(buttonInput) && buttonInput != '.') {
+      var result = this.inputBuffer.read()
+      console.log('result',result)
+      this.inputBuffer.clear()
     } else {
-      console.log(button);
+      this.inputBuffer.push(buttonInput)
+      this.updateDisplay()
     }
+  }
+
+  this.updateDisplay = function() {
+    document.getElementById('calculator-display-text').innerText = this.inputBuffer.read()
   }
 }
 
