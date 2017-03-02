@@ -91,6 +91,22 @@ function Queue() {
     this._front = newFront
     return oldFront._data
   }
+
+  this.emptyAndReturn = function() {
+    var result = []
+    var length = this.length()
+    for (var i = 0; i < length; ++i) {
+      result.push(this.dequeue())
+    }
+    console.log('emptyAndReturn',result)
+    return result
+  }
+
+  this.display = function() {
+    console.log('front', this._front)
+    console.log('back', this._back)
+    console.log('length', this.length())
+  }
 }
 
 function InputBuffer() {
@@ -116,9 +132,16 @@ function Calculator() {
 
   this.buttonPress = function(buttonInput) {
     if (isNaN(buttonInput) && buttonInput != '.') {
-      var result = this.inputBuffer.read()
-      console.log('result',result)
+      this.outputQueue.enqueue(this.inputBuffer.read())
       this.inputBuffer.clear()
+      switch (buttonInput) {
+        case '=':
+          this.outputQueue.enqueue(this.operatorStack.pop())
+          var emptyAndReturn = this.outputQueue.emptyAndReturn()
+          break;
+        default:
+          this.operatorStack.push(buttonInput)
+      }
     } else {
       this.inputBuffer.push(buttonInput)
       this.updateDisplay()
