@@ -137,7 +137,8 @@ function Calculator() {
       switch (buttonInput) {
         case '=':
           this.outputQueue.enqueue(this.operatorStack.pop())
-          var emptyAndReturn = this.outputQueue.emptyAndReturn()
+          var evaluate = this.evaluate(this.outputQueue.emptyAndReturn())
+          console.log('evaluate',evaluate)
           break;
         default:
           this.operatorStack.push(buttonInput)
@@ -150,6 +151,57 @@ function Calculator() {
 
   this.updateDisplay = function() {
     document.getElementById('calculator-display-text').innerText = this.inputBuffer.read()
+  }
+
+  this.evaluate = function(expressionArray) {
+    if (expressionArray[0] === '') {
+      return 0
+    }
+    this.isOperator = function(input) {
+      switch (input) {
+        case '+':
+        case '-':
+        case '÷':
+        case '*':
+          return true
+        break;
+        default:
+          return false
+      }
+    }
+
+    var index = 0
+    var operatorFound = false
+    while ((operatorFound === false) && (index < expressionArray.length)) {
+      if (this.isOperator(expressionArray[index])) {
+        operatorFound = true
+      } else {
+        index++
+      }
+    }
+
+    if (operatorFound === false) {
+      return expressionArray[0]
+    } else {
+      var evalString = ''
+      evalString = expressionArray[index - 2]
+        + expressionArray[index]
+        + expressionArray[index - 1]
+      console.log('evalString',evalString)
+      console.log('eval(evalString',eval(evalString))
+      if (index === 3) {
+        return eval(evalString)
+      } else if (index === 4){
+        var partialResult
+        var clonedArray = expressionArray.slice(0)
+        var start = index - 2
+        clonedArray.splice(start, index, partialResult)
+      }
+      return index
+      //if down to 3 / 1,
+      //place result into outputQueue
+      //["2","3","5","*","+"]
+    }
   }
 }
 
