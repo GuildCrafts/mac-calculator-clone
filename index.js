@@ -37,6 +37,11 @@ function Stack() {
     }
     return result
   }
+
+  this.isAddition = function() {
+    var operator = this.peek()
+    return ((operator === '+') || (operator === '−'))
+  }
 }
 
 function Node(data ) {
@@ -74,15 +79,17 @@ function Queue() {
   }
 
   this.enqueue = function(data) {
-    var newNode = new Node(data)
-    if (this._length === 0) {
-      this._front = newNode
-    } else {
-      var oldBack = this._back
-      newNode._next = oldBack
+    if (data !== '') {
+      var newNode = new Node(data)
+      if (this._length === 0) {
+        this._front = newNode
+      } else {
+        var oldBack = this._back
+        newNode._next = oldBack
+      }
+      this._back = newNode
+      ++this._length
     }
-    this._back = newNode
-    ++this._length
   }
 
   this.dequeue = function() {
@@ -143,36 +150,54 @@ function Calculator() {
   this.justEvaluated = false
 
   this.buttonPress = function(buttonInput) {
+    console.log('this.outputQueue.display()',this.outputQueue.display())
+    console.log('this.operatorStack',this.operatorStack._elements)
     if (isNaN(buttonInput) && buttonInput != '.') {
+      this.justEvaluated = false
       switch (buttonInput) {
         case '=':
           this.outputQueue.enqueue(this.inputBuffer.read())
           this.inputBuffer.clear()
-          this.getOperatorsAndEvaluate()
+          this.getOperatorsAndEvaluateOutputQueue()
           this.justEvaluated = true
-          break;
+          break
         case 'C':
           this.clear()
-          break;
+          break
         case '±':
-          var currentInput = this.inputBuffer.read()
-          this.inputBuffer.set(+currentInput * -1)
-          this.updateDisplay()
-          break;
+          var newValue = (this.inputBuffer.read() * -1)
+          this.inputBuffer.set(newValue)
+          this.updateDisplay(newValue)
+          break
         case '%':
-          var currentInput = this.inputBuffer.read()
-          this.inputBuffer.set(+currentInput / 100)
-          this.updateDisplay()
-          break;
-        //default operators
-        default:
+          var newValue = (this.inputBuffer.read() / 100)
+          this.inputBuffer.set(newValue)
+          this.updateDisplay(newValue)
+          break
+        case '+':
+        case '−':
           this.outputQueue.enqueue(this.inputBuffer.read())
           this.inputBuffer.clear()
           if (!this.operatorStack.isEmpty()){
-            this.getOperatorsAndEvaluate()
+            this.getOperatorsAndEvaluateOutputQueue()
           }
           this.inputBuffer.clear()
           this.operatorStack.push(buttonInput)
+          break
+        case '*':
+        case '÷':
+          this.outputQueue.enqueue(this.inputBuffer.read())
+          this.inputBuffer.clear()
+          if (!this.operatorStack.isEmpty()){
+            if (! this.operatorStack.isAddition()) {
+              this.getOperatorsAndEvaluateOutputQueue()
+            }
+          }
+          this.inputBuffer.clear()
+          this.operatorStack.push(buttonInput)
+          break
+        default:
+          console.log('Error: unhandled operator');
       }
       //number handling
     } else {
@@ -182,22 +207,23 @@ function Calculator() {
         this.justEvaluated = false
       }
       this.inputBuffer.push(buttonInput)
-      this.updateDisplay()
+      this.updateDisplay(buttonInput)
     }
   }
 
-  this.updateDisplay = function() {
-    document.getElementById('calculator-display-text').innerText = this.inputBuffer.read()
+  this.updateDisplay = function(value) {
+    document.getElementById('calculator-display-text').innerText = value
   }
 
   this.clear = function(){
     this.outputQueue.emptyAndReturn()
     this.operatorStack.emptyAndReturn()
     this.inputBuffer.set(0)
-    this.updateDisplay()
+    this.updateDisplay(0)
   }
 
   this.evaluate = function(expressionArray) {
+    console.log('expressionArray',expressionArray)
     if (expressionArray[0] === '') {
       return 0
     }
@@ -208,7 +234,7 @@ function Calculator() {
         case '÷':
         case '*':
           return true
-        break;
+        break
         default:
           return false
       }
@@ -217,13 +243,13 @@ function Calculator() {
     this.calculateBinomial = function(firstNumber, secondNumber, operator) {
       switch (operator) {
         case '+': return +firstNumber + +secondNumber
-          break;
+          break
         case '−': return +firstNumber - +secondNumber
-          break;
+          break
         case '÷': return +firstNumber / +secondNumber
-          break;
+          break
         case '*': return +firstNumber * +secondNumber
-          break;
+          break
         default: return 'Invalid operator'
       }
     }
@@ -261,15 +287,14 @@ function Calculator() {
     }
   }
 
-  this.getOperatorsAndEvaluate = function() {
+  this.getOperatorsAndEvaluateOutputQueue = function() {
     var operators = this.operatorStack.emptyAndReturn()
     for (var i = 0; i < operators.length; i++) {
       this.outputQueue.enqueue(operators[i])
     }
     var evaluated = this.evaluate(this.outputQueue.emptyAndReturn())
     this.outputQueue.enqueue(evaluated)
-    this.inputBuffer.push(evaluated)
-    this.updateDisplay()
+    this.updateDisplay(evaluated)
   }
 }
 
