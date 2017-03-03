@@ -130,6 +130,10 @@ function InputBuffer() {
   this.read = function() {
     return this.buffer
   }
+
+  this.set = function(value) {
+    this.buffer = value
+  }
 }
 
 function Calculator() {
@@ -154,14 +158,23 @@ function Calculator() {
           this.updateDisplay()
           this.justEvaluated = true
           break;
+        case '%':
+          var currentInput = this.inputBuffer.read()
+          console.log('currentInput',currentInput)
+          this.inputBuffer.set(+currentInput / 100)
+          this.updateDisplay()
+          break;
+          //default operators
         default:
-          if (this.justEvaluated) {
-            this.outputQueue.emptyAndReturn()
-            this.justEvaluated = false
-          }
           this.operatorStack.push(buttonInput)
       }
+      //number handling
     } else {
+      if (this.justEvaluated) {
+        this.outputQueue.emptyAndReturn()
+        this.inputBuffer.clear()
+        this.justEvaluated = false
+      }
       this.inputBuffer.push(buttonInput)
       this.updateDisplay()
     }
