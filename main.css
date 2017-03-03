@@ -1,0 +1,92 @@
+html,body {
+  height: 100%;
+}
+
+.canvas {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calculator-container {
+  flex-shrink: 0;
+  outline: 1px solid #818181;
+  height: 320px;
+  width: 230px;
+  font-family: Roboto, sans-serif;
+  box-shadow: 0px 10px 30px 10px rgba(0, 0, 0, 0.15);
+}
+
+.calculator-display-box {
+  background-color: #ababab;
+  height: 75px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+#calculator-display-text {
+  font-size: 2.6em;
+  font-weight: 100;
+  color: #fff;
+  margin: 0px 10px;
+}
+
+.calculator-row {
+  display: flex;
+}
+
+.calculator-button,
+.calculator-button-zero,
+.calculator-button-top,
+.calculator-button-orange {
+  height: 49px;
+  outline: 1px solid #979797;
+  display: flex;
+  align-items: center;
+  transition: filter 100ms ease-out;
+}
+
+.calculator-button,
+.calculator-button-top,
+.calculator-button-orange {
+  flex: 1;
+  justify-content: center;
+}
+
+.calculator-button,
+.calculator-button-top,
+.calculator-button-zero {
+  font-size: 1.3em;
+  font-weight: 400;
+}
+
+.calculator-button,
+.calculator-button-zero {
+  background-color: #f0efef;
+}
+
+.calculator-button-top {
+  background-color: #d6d6d6;
+}
+
+.calculator-button-orange {
+  background-color: #f9941d;
+  color: #fff;
+  font-size: 1.9em;
+  font-weight: 100;
+}
+
+.calculator-button-zero {
+  flex: 2;
+}
+
+.calculator-button-zero > div {
+  margin-left: 23px;
+}
+
+.calculator-row > div:active,
+.calculator-row > div:hover {
+  filter: brightness(93%);
+}
