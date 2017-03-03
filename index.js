@@ -106,7 +106,6 @@ function Queue() {
     for (var i = 0; i < length; ++i) {
       result.push(this.dequeue())
     }
-    console.log('emptyAndReturn',result)
     return result
   }
 
@@ -137,6 +136,7 @@ function Calculator() {
   this.inputBuffer = new InputBuffer()
   this.outputQueue = new Queue()
   this.operatorStack = new Stack()
+  this.justEvaluated = false
 
   this.buttonPress = function(buttonInput) {
     if (isNaN(buttonInput) && buttonInput != '.') {
@@ -148,10 +148,17 @@ function Calculator() {
           for (var i = 0; i < operators.length; i++) {
             this.outputQueue.enqueue(operators[i])
           }
-          var evaluate = this.evaluate(this.outputQueue.emptyAndReturn())
-          console.log('evaluate',evaluate)
+          var evaluated = this.evaluate(this.outputQueue.emptyAndReturn())
+          this.outputQueue.enqueue(evaluated)
+          this.inputBuffer.push(evaluated)
+          this.updateDisplay()
+          this.justEvaluated = true
           break;
         default:
+          if (this.justEvaluated) {
+            this.outputQueue.emptyAndReturn()
+            this.justEvaluated = false
+          }
           this.operatorStack.push(buttonInput)
       }
     } else {
@@ -165,7 +172,6 @@ function Calculator() {
   }
 
   this.evaluate = function(expressionArray) {
-    console.log('expressionArray',expressionArray)
     if (expressionArray[0] === '') {
       return 0
     }
@@ -183,7 +189,6 @@ function Calculator() {
     }
 
     this.calculateBinomial = function(firstNumber, secondNumber, operator) {
-      console.log('firstNumber, secondNumber, operator',firstNumber, secondNumber, operator)
       switch (operator) {
         case '+': return +firstNumber + +secondNumber
           break;
@@ -219,14 +224,14 @@ function Calculator() {
         var clonedArray = expressionArray.slice(0)
         var start = index - 2
         clonedArray.splice(start, index, partialResult)
-        console.log('clonedArray',clonedArray)
-        this.evaluate(clonedArray)
+        index--
+        firstNumber = clonedArray[index-2]
+        secondNumber = clonedArray[index-1]
+        operator = clonedArray[index]
+        return this.calculateBinomial(firstNumber, secondNumber, operator)
       } else {
         return 'Error Evaluating'
       }
-      //if down to 3 / 1,
-      //place result into outputQueue
-      //["2","3","5","*","+"]
     }
   }
 }
