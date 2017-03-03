@@ -144,10 +144,10 @@ function Calculator() {
 
   this.buttonPress = function(buttonInput) {
     if (isNaN(buttonInput) && buttonInput != '.') {
-      this.outputQueue.enqueue(this.inputBuffer.read())
-      this.inputBuffer.clear()
       switch (buttonInput) {
         case '=':
+          this.outputQueue.enqueue(this.inputBuffer.read())
+          this.inputBuffer.clear()
           var operators = this.operatorStack.emptyAndReturn()
           for (var i = 0; i < operators.length; i++) {
             this.outputQueue.enqueue(operators[i])
@@ -158,14 +158,18 @@ function Calculator() {
           this.updateDisplay()
           this.justEvaluated = true
           break;
+        case 'C':
+          this.clear()
+          break;
         case '%':
           var currentInput = this.inputBuffer.read()
-          console.log('currentInput',currentInput)
           this.inputBuffer.set(+currentInput / 100)
           this.updateDisplay()
           break;
-          //default operators
+        //default operators
         default:
+          this.outputQueue.enqueue(this.inputBuffer.read())
+          this.inputBuffer.clear()
           this.operatorStack.push(buttonInput)
       }
       //number handling
@@ -182,6 +186,13 @@ function Calculator() {
 
   this.updateDisplay = function() {
     document.getElementById('calculator-display-text').innerText = this.inputBuffer.read()
+  }
+
+  this.clear = function(){
+    this.outputQueue.emptyAndReturn()
+    this.operatorStack.emptyAndReturn()
+    this.inputBuffer.set(0)
+    this.updateDisplay()
   }
 
   this.evaluate = function(expressionArray) {
