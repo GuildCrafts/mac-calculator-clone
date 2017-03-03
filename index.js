@@ -148,14 +148,7 @@ function Calculator() {
         case '=':
           this.outputQueue.enqueue(this.inputBuffer.read())
           this.inputBuffer.clear()
-          var operators = this.operatorStack.emptyAndReturn()
-          for (var i = 0; i < operators.length; i++) {
-            this.outputQueue.enqueue(operators[i])
-          }
-          var evaluated = this.evaluate(this.outputQueue.emptyAndReturn())
-          this.outputQueue.enqueue(evaluated)
-          this.inputBuffer.push(evaluated)
-          this.updateDisplay()
+          this.getOperatorsAndEvaluate()
           this.justEvaluated = true
           break;
         case 'C':
@@ -174,6 +167,10 @@ function Calculator() {
         //default operators
         default:
           this.outputQueue.enqueue(this.inputBuffer.read())
+          this.inputBuffer.clear()
+          if (!this.operatorStack.isEmpty()){
+            this.getOperatorsAndEvaluate()
+          }
           this.inputBuffer.clear()
           this.operatorStack.push(buttonInput)
       }
@@ -262,6 +259,17 @@ function Calculator() {
         return 'Error Evaluating'
       }
     }
+  }
+
+  this.getOperatorsAndEvaluate = function() {
+    var operators = this.operatorStack.emptyAndReturn()
+    for (var i = 0; i < operators.length; i++) {
+      this.outputQueue.enqueue(operators[i])
+    }
+    var evaluated = this.evaluate(this.outputQueue.emptyAndReturn())
+    this.outputQueue.enqueue(evaluated)
+    this.inputBuffer.push(evaluated)
+    this.updateDisplay()
   }
 }
 
