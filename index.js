@@ -161,6 +161,11 @@ function Calculator() {
         case 'C':
           this.clear()
           break;
+        case '±':
+          var currentInput = this.inputBuffer.read()
+          this.inputBuffer.set(+currentInput * -1)
+          this.updateDisplay()
+          break;
         case '%':
           var currentInput = this.inputBuffer.read()
           this.inputBuffer.set(+currentInput / 100)
