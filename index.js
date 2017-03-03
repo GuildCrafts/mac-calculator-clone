@@ -29,6 +29,14 @@ function Stack() {
     delete this._elements[this._topIndex-- -1]
     return result
   }
+
+  this.emptyAndReturn = function() {
+    var result = []
+    while (!(this.isEmpty())) {
+      result.push(this.pop())
+    }
+    return result
+  }
 }
 
 function Node(data ) {
@@ -136,7 +144,10 @@ function Calculator() {
       this.inputBuffer.clear()
       switch (buttonInput) {
         case '=':
-          this.outputQueue.enqueue(this.operatorStack.pop())
+          var operators = this.operatorStack.emptyAndReturn()
+          for (var i = 0; i < operators.length; i++) {
+            this.outputQueue.enqueue(operators[i])
+          }
           var evaluate = this.evaluate(this.outputQueue.emptyAndReturn())
           console.log('evaluate',evaluate)
           break;
@@ -154,19 +165,35 @@ function Calculator() {
   }
 
   this.evaluate = function(expressionArray) {
+    console.log('expressionArray',expressionArray)
     if (expressionArray[0] === '') {
       return 0
     }
     this.isOperator = function(input) {
       switch (input) {
         case '+':
-        case '-':
+        case '−':
         case '÷':
         case '*':
           return true
         break;
         default:
           return false
+      }
+    }
+
+    this.calculateBinomial = function(firstNumber, secondNumber, operator) {
+      console.log('firstNumber, secondNumber, operator',firstNumber, secondNumber, operator)
+      switch (operator) {
+        case '+': return +firstNumber + +secondNumber
+          break;
+        case '−': return +firstNumber - +secondNumber
+          break;
+        case '÷': return +firstNumber / +secondNumber
+          break;
+        case '*': return +firstNumber * +secondNumber
+          break;
+        default: return 'Invalid operator'
       }
     }
 
@@ -179,25 +206,24 @@ function Calculator() {
         index++
       }
     }
-
     if (operatorFound === false) {
       return expressionArray[0]
     } else {
-      var evalString = ''
-      evalString = expressionArray[index - 2]
-        + expressionArray[index]
-        + expressionArray[index - 1]
-      console.log('evalString',evalString)
-      console.log('eval(evalString',eval(evalString))
-      if (index === 3) {
-        return eval(evalString)
-      } else if (index === 4){
-        var partialResult
+      var firstNumber = expressionArray[index-2]
+      var secondNumber = expressionArray[index-1]
+      var operator = expressionArray[index]
+      if (index === 2) {
+        return this.calculateBinomial(firstNumber, secondNumber, operator)
+      } else if (index === 3){
+        var partialResult = this.calculateBinomial(firstNumber, secondNumber, operator)
         var clonedArray = expressionArray.slice(0)
         var start = index - 2
         clonedArray.splice(start, index, partialResult)
+        console.log('clonedArray',clonedArray)
+        this.evaluate(clonedArray)
+      } else {
+        return 'Error Evaluating'
       }
-      return index
       //if down to 3 / 1,
       //place result into outputQueue
       //["2","3","5","*","+"]
