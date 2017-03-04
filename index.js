@@ -153,7 +153,7 @@ function Calculator() {
     console.log('this.outputQueue.display()',this.outputQueue.display())
     console.log('this.operatorStack',this.operatorStack._elements)
     if (isNaN(buttonInput) && buttonInput != '.') {
-      this.justEvaluated = false
+
       switch (buttonInput) {
         case '=':
           this.outputQueue.enqueue(this.inputBuffer.read())
@@ -162,6 +162,7 @@ function Calculator() {
           this.justEvaluated = true
           break
         case 'C':
+          this.justEvaluated = false
           this.clear()
           break
         case '±':
@@ -176,17 +177,22 @@ function Calculator() {
           break
         case '+':
         case '−':
-          this.outputQueue.enqueue(this.inputBuffer.read())
+          if (this.justEvaluated === false) {
+            this.outputQueue.enqueue(this.inputBuffer.read())
+          }
           this.inputBuffer.clear()
           if (!this.operatorStack.isEmpty()){
             this.getOperatorsAndEvaluateOutputQueue()
+            console.log('opp stack isnt epmty');
           }
-          this.inputBuffer.clear()
           this.operatorStack.push(buttonInput)
+          this.justEvaluated = false
           break
         case '*':
         case '÷':
-          this.outputQueue.enqueue(this.inputBuffer.read())
+          if (this.justEvaluated === false) {
+            this.outputQueue.enqueue(this.inputBuffer.read())
+          }
           this.inputBuffer.clear()
           if (!this.operatorStack.isEmpty()){
             if (! this.operatorStack.isAddition()) {
@@ -195,6 +201,7 @@ function Calculator() {
           }
           this.inputBuffer.clear()
           this.operatorStack.push(buttonInput)
+          this.justEvaluated = false
           break
         default:
           console.log('Error: unhandled operator');
@@ -294,6 +301,7 @@ function Calculator() {
     }
     var evaluated = this.evaluate(this.outputQueue.emptyAndReturn())
     this.outputQueue.enqueue(evaluated)
+    this.inputBuffer.set(evaluated)
     this.updateDisplay(evaluated)
   }
 }
