@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,400');
+
+
+
+.calculator-container {
+  display: flex;
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  transform: translateX(-50%);
+  flex-direction: column;
+  justify-content: center;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 1.5%;
+  width: 230px;
+  height: 320px;
+  background-color: #A0A0A0;
+  user-select: none;
+}
+
+.calculator-decimal-button:hover,
+.calculator-number-button:hover,
+.calculator-function-button:hover {
+  background-color: #B7B7B7;
+}
+
+.calculator-decimal-button:active,
+.calculator-number-button:active,
+.calculator-function-button:active {
+  background-color: #9E9E9E;
+  fontfilter: invert(100%);
+}
+
+.calculator-operation-button:hover {
+  background-color: #D68039;
+}
+
+.calculator-operation-button:active {
+  background-color: #AF692F;
+  color: rgb(104,104,104);
+}
+
+.calculator-button {
+  transition: background-color 100ms;
+  transition-delay: 50ms;
+  width: 25%;
+  margin: 1px;
+  display:flex;
+  font-weight: 400;
+  justify-content: center;
+  align-items: center;
+}
+
+.calculator-zero-button {
+  display: flex;
+  width: 41%;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 1px;
+  padding-left: 22px;
+}
+
+.calculator-row-1,
+.calculator-row-2,
+.calculator-row-3,
+.calculator-row-4,
+.calculator-row-5,
+.calculator-row-6 {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  height: 48.5px;
+}
+
+.calculator-display {
+  display: flex;
+  order: 1;
+  font-size: 3em;
+  height: 77.5px;
+  justify-content: flex-end;
+  align-items: center;
+  color: #F7F1EF;
+  padding-right: 5px;
+  font-weight: 100;
+}
+
+.calculator-operation-button {
+  font-size: 1.25em;
+  background-color: #EF9343;
+  color: #F7F1EF;
+}
+
+.calculator-decimal-button,
+.calculator-number-button {
+  font-size: 1.25em;
+  background-color: #E0E0E0;
+  align-content: center;
+}
+.calculator-function-button {
+  font-size: 1.25em;
+  background-color: #D6D6D6 ;
+}
+
+.calculator-row-1 {
+  order: 2;
+}
+
+.calculator-row-2 {
+  order: 3
+}
+
+.calculator-row-3 {
+  order: 4
+}
+
+.calculator-row-4 {
+  order: 5
+}
+
+.calculator-row-5 {
+  order: 6
+}
