@@ -23,6 +23,7 @@
     console.log( '---===target===---', buttonValue )
     if (buttonValue === 'AC') {
       firstInput = secondInput = operation = null
+      updateDisplay()
       return
     }
     if (/^\d$/.test(buttonValue)) {
@@ -40,16 +41,19 @@
             : buttonValue,
           10)
       }
+      updateDisplay()
       return
     }
     if (buttonValue === '+') {
       operation = '+'
+      updateDisplay()
       return
     }
-    // if (buttonValue === '=') {
-    //   calculate()
-    // }
-    updateDisplay()
+    if (buttonValue === '=') {
+      calculate()
+      updateDisplay()
+      return
+    }
   }
 
   clear.onClick = function() {
@@ -59,6 +63,9 @@
     // do operation update display with the result of operation
     result = firstInput + secondInput
     console.log( '<3333333 success <3333333', result )
+    secondInput = undefined
+    firstInput = result
+    updateDisplay()
     return result
   }
 
