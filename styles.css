@@ -18,6 +18,10 @@
   user-select: none;
 }
 
+/*.calculator-display-port{
+  background-color: #bada55
+}*/
+
 .calculator-decimal-button:hover,
 .calculator-number-button:hover,
 .calculator-function-button:hover {
@@ -44,7 +48,7 @@
   transition: background-color 100ms;
   transition-delay: 50ms;
   width: 25%;
-  margin: 1px;
+  margin: 0px 1px 1px 0px;
   display:flex;
   font-weight: 400;
   justify-content: center;
@@ -56,7 +60,7 @@
   width: 41%;
   justify-content: flex-start;
   align-items: center;
-  margin: 1px;
+  margin: 0px 1px 1px 0px;
   padding-left: 22px;
 }
 
@@ -74,7 +78,6 @@
 
 .calculator-display {
   display: flex;
-  order: 1;
   font-size: 3em;
   height: 77.5px;
   justify-content: flex-end;
