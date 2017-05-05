@@ -46,22 +46,22 @@
       return
     }
     if (buttonValue === '+') {
-      operation = function(firstInput,secondInput) {return firstInput + secondInput}
+      operation = operations.add
       updateDisplay()
       return
     }
     if (buttonValue === '-') {
-      operation = function(firstInput,secondInput) {return firstInput - secondInput}
+      operation = operations.subtract
       updateDisplay()
       return
     }
     if (buttonValue === '/') {
-      operation = function(firstInput,secondInput) {return firstInput / secondInput}
+      operation = operations.divide
       updateDisplay()
       return
     }
     if (buttonValue === 'x') {
-      operation = function(firstInput,secondInput) {return firstInput * secondInput}
+      operation = operations.multiply
       updateDisplay()
       return
     }
@@ -82,6 +82,13 @@
       updateDisplay()
       return
     }
+  }
+
+  var operations = {
+    add: function(a,b) { return a + b }
+    subtract: function(a,b) { return a - b }
+    divide: function(a,b) { return a / b }
+    multiply: function(a,b) { return a * b }
   }
 
   clear.onClick = function() {
