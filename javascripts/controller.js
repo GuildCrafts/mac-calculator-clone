@@ -45,7 +45,22 @@
       return
     }
     if (buttonValue === '+') {
-      operation = '+'
+      operation = function(firstInput,secondInput) {return firstInput + secondInput}
+      updateDisplay()
+      return
+    }
+    if (buttonValue === '-') {
+      operation = function(firstInput,secondInput) {return firstInput - secondInput}
+      updateDisplay()
+      return
+    }
+    if (buttonValue === '/') {
+      operation = function(firstInput,secondInput) {return firstInput / secondInput}
+      updateDisplay()
+      return
+    }
+    if (buttonValue === 'x') {
+      operation = function(firstInput,secondInput) {return firstInput * secondInput}
       updateDisplay()
       return
     }
@@ -58,10 +73,11 @@
 
   clear.onClick = function() {
     currentValue = [];
-  };
+  }
+
   function calculate() {
     // do operation update display with the result of operation
-    result = firstInput + secondInput
+    result = operation(firstInput, secondInput)
     console.log( '<3333333 success <3333333', result )
     secondInput = undefined
     firstInput = result
