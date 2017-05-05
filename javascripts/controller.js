@@ -6,6 +6,7 @@
 
   firstInput = null
   operation = null
+  secondOperation = null
   secondInput = null
   // currentValue = 0
 
@@ -61,6 +62,18 @@
     }
     if (buttonValue === 'x') {
       operation = function(firstInput,secondInput) {return firstInput * secondInput}
+      updateDisplay()
+      return
+    }
+    if (buttonValue === '+/-') {
+      operation = function(firstInput,secondInput) {return firstInput * -1}
+      calculate()
+      updateDisplay()
+      return
+    }
+    if (buttonValue === '%') {
+      operation = function(firstInput,secondInput) {return firstInput / 100}
+      calculate()
       updateDisplay()
       return
     }
