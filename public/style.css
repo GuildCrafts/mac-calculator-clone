@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+}
+
+.calculator-instance {
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  height: 322px;
+  border-radius: 10%;
+  box-shadow: 20px 20px 30px grey;
+}
+
+.calculator-display {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-family: Roboto;
+  font-size: 2em;
+  color: white;
+  padding: 0 7px 0 0;
+  background-color: #7a7c7f;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  flex-grow: 1;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.calculator-row {
+  display: flex;
+  flex-direction: row;
+  width: 240px;
+  flex-grow: 1;
+  align-items: stretch;
+}
+
+.calculator-button {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  font-family: Roboto;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  background-color: #d4d6d8;
+  transition: background-color 100ms;
+}
+.calculator-button:last-child {
+  border-right: 1px solid #000000;
+}
+
+.calculator-button:hover {
+  background-color: #848b93;
+}
+
+.calculator-button:active {
+  background-color: #6b6f73;
+}
+
+.calculator-last-button {
+  background-color: #f16d08;
+}
+
+.calculator-last-button:hover {
+  background-color: #bf5b0e;
+}
+
+.calculator-last-button:active {
+  background-color: #853f0a;
+}
+
+.calculator-zero-button {
+  width: 120px;
+  justify-content: flex-start;
+  text-indent: 25px;
+}
+
+.calculator-row:last-child .calculator-button:last-child {
+  border-bottom-right-radius: 10px;
+  border-bottom: 1px solid black;
+}
+
+.calculator-row:last-child .calculator-button:first-child {
+  border-bottom-left-radius: 10px;
+  border-bottom: 1px solid black;
+}
+
+.calculator-row:last-child .calculator-button:nth-child(2) {
+  border-bottom: 1px solid black;
+}
