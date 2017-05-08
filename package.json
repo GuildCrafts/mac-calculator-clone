@@ -1,0 +1,22 @@
+{
+  "name": "mac-calculator-clone",
+  "version": "1.0.0",
+  "description": "A clone of the native calculator that ships with the Mac Os",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zubairnahmed/mac-calculator-clone.git"
+  },
+  "author": "Zubair Ahmed",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GuildCrafts/mac-calculator-clone/issues"
+  },
+  "homepage": "https://github.com/GuildCrafts/mac-calculator-clone#readme",
+  "dependencies": {
+    "normalize.css": "^7.0.0"
+  }
+}
