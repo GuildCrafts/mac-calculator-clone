@@ -1,0 +1,23 @@
+{
+  "name": "mac-calculator-clone",
+  "version": "1.0.0",
+  "description": "This this the base repo for the [Mac Calculator Clone](http://jsdev.learnersguild.org/goals/150) goal.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/je-lopez/mac-calculator-clone.git"
+  },
+  "author": "Jorge Lopez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/je-lopez/mac-calculator-clone/issues"
+  },
+  "homepage": "https://github.com/je-lopez/mac-calculator-clone#readme",
+  "dependencies": {
+    "normalize": "^0.3.1",
+    "normalize.css": "^7.0.0"
+  }
+}
